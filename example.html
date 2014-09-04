@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>An example for mobileImgViewer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+<meta name="apple-touch-fullscreen" content="YES" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<style>
+	body{
+		margin: 0;
+		padding: 0;
+		background: #eee;
+		overflow: hidden;
+		color: #333;
+		font-family: Roboto, "Roboto", serif;
+		text-shadow: 0 1px #fff;
+	}
+	h1,h3{
+		padding-left: 10px;
+		font-weight: normal;
+	}
+	
+	#ctn{
+		height: 138px;
+	}
+	#ctn img{
+		width: 50px;
+		height: 50px;
+		float: left;
+		margin: 5px;
+	}
+	.tribute{
+		padding-left: 10px;
+		font-size: 12px;
+	}
+	.to-github{
+		display: block;
+		margin: 90px 16%;
+		text-align: center;
+		padding: 10px;
+		background: #adaaff;
+		border-radius: 5px;
+		color: #333;
+		text-decoration: none;
+	}
+	.to-github:active{
+		background: #9baaff;
+	}
+</style>
+<link rel="stylesheet" href="src/mobileImgViewer.css">
+</head>
+<body>
+	<h1>An example for mobileImgViewer</h1>
+	<h3>Please open this site on your phone, then touch these pictures below.</h3>
+	<div id="ctn">
+		<img src="src/img/1.jpg" class="swipe-target" title="hello world" />
+		<img src="src/img/2.jpg" class="swipe-target" title="hello world" />
+		<img src="src/img/3.jpg" class="swipe-target" title="hello world" />
+		<img src="src/img/4.jpg" class="swipe-target" title="hello world" />
+		<img src="src/img/5.jpg" class="swipe-target" title="hello world" />
+		<img src="src/img/6.jpg" class="swipe-target" title="hello world" />
+		<img src="src/img/7.jpg" class="swipe-target" title="hello world" />
+	</div>
+	<div class="tribute">A tribute to Japanese illustrator Keeggy.</div>
+	<a href="https://github.com/litten/MobileImgViewer" class="to-github">view on github</a>
+
+	<!-- 外层画布 -->
+	<div id="viewer" class="hide">
+		<div id="viewer-box">
+			<div class="viewer-head">
+				<div class="viewer-back">查看图片<span class="viewer-count">[1/6]</span></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="src/mobileImgViewer.js"></script>
+	<script>
+		new MobileImgViewer({
+			dom : document.getElementById('viewer-box'),
+			ctn: document.getElementById('ctn')
+		});
+	</script>
+</body>
