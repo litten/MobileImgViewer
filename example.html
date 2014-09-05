@@ -62,23 +62,31 @@
 		<img src="src/img/6.jpg" class="swipe-target" title="hello world" />
 		<img src="src/img/7.jpg" class="swipe-target" title="hello world" />
 	</div>
-	<div class="tribute">A tribute to Japanese illustrator Keeggy.</div>
+	<div class="tribute">Atribute to Japanese illustrator Keeggy.</div>
 	<a href="https://github.com/litten/MobileImgViewer" class="to-github">view on github</a>
 
-	<!-- 外层画布 -->
-	<div id="viewer" class="hide">
-		<div id="viewer-box">
-			<div class="viewer-head">
-				<div class="viewer-back">查看图片<span class="viewer-count">[1/6]</span></div>
-			</div>
-		</div>
-	</div>
 
 	<script src="src/mobileImgViewer.js"></script>
 	<script>
 		new MobileImgViewer({
-			dom : document.getElementById('viewer-box'),
-			ctn: document.getElementById('ctn')
+			ctn: document.getElementById('ctn'),
+			backBtn: "查看图片",
+			menu: [{
+				btn: "btn1",
+				callback: function(event){
+					alert("you touch btn1");
+				}
+			},{
+				btn: "btn2",
+				callback: function(event){
+					alert("you touch btn2");
+				}
+			},{
+				btn: "btn3",
+				callback: function(event){
+					alert("you touch btn3");
+				}
+			}]
 		});
 	</script>
 </body>

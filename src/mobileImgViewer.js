@@ -11,6 +11,8 @@
 		//构造函数需要的参数
 		this.wrap = opts.dom;
 		this.ctn = opts.ctn;
+		this.backBtn = opts.backBtn || "";
+		this.menu = opts.menu || [];
 		//构造四步
 		this.init();
 		this.combine();
@@ -18,6 +20,17 @@
 		this.bindDOM();
 	}
 
+	//menu相关
+	var Menu = {
+		show: function(){
+			var $menu = document.getElementsByClassName("viewer-menu")[0];
+			$menu.className = "viewer-menu";
+		},
+		hide: function(){
+			var $menu = document.getElementsByClassName("viewer-menu")[0];
+			$menu.className = "viewer-menu hide";
+		}
+	}
 	//第一步 -- 初始化
 	MobileImgViewer.prototype.init = function() {
 		//设定窗口比率
@@ -52,11 +65,26 @@
 	}
 	//第三步 -- 根据数据渲染DOM
 	MobileImgViewer.prototype.renderDOM = function(){
-		var wrap = this.wrap;
 		var data = this.list;
 		var len = data.length;
+		//生成节点
+		var backWording = this.backBtn.toString() || "";
+		var $viewer = document.createElement("div");
+		$viewer.id = "viewer";
+		$viewer.className = "hide";
+		$viewer.innerHTML = '<div id="viewer-box">\
+			<div class="viewer-head">\
+				<div class="viewer-back"><i><</i><span class="viewer-back-wording">'+backWording+'</span><span class="viewer-count">[1/6]</span></div>\
+				<div class="viewer-more">...</div>\
+			</div>\
+		</div>';
 
+		//主要图片节点
+		document.getElementsByTagName("body")[0].appendChild($viewer);
+		var wrap = document.getElementById("viewer-box");
+		this.wrap = wrap;
 		this.outer = document.createElement('ul');
+		this.outer.className = "viewer-list";
 
 		for(var i = 0; i < len; i++){
 			var li = document.createElement('li');
@@ -76,6 +104,22 @@
 			this.outer.appendChild(li);
 		}
 
+		//菜单节点
+		if(this.menu.length != 0){
+			var $menu = document.createElement('ul');
+			$menu.className = "viewer-menu hide";
+			for(var i=0,len=this.menu.length; i<len; i++){
+				var em = this.menu[i];
+				var $li = document.createElement('li');
+				$li.textContent = em["btn"];
+				$li.addEventListener("touchend", function(e){
+					em["callback"](e);
+					$menu.className = "viewer-menu hide";
+				});
+				$menu.appendChild($li);
+			}
+			wrap.appendChild($menu);
+		}
 		//UL的宽度和画布宽度一致
 		this.outer.style.width = this.scaleW +'px';
 		//console.log(wrap.getElementsByClassName("viewer-head")[0]);
@@ -202,6 +246,9 @@
 					lis[i].className = "hide";
 				}	
 			}
+
+			//隐藏菜单
+			Menu.hide();
 		};
 
 		//手指移动的处理事件
@@ -283,6 +330,18 @@
 		//点击隐藏
 		self.wrap.getElementsByClassName("viewer-back")[0].addEventListener("touchend", function(){
 			self.hide();
+			Menu.hide();
+		}, false);
+
+		//menu按钮点击
+		self.wrap.getElementsByClassName("viewer-more")[0].addEventListener("touchend", function(){
+			var $menu = self.wrap.getElementsByClassName("viewer-menu")[0];
+			if($menu.className.indexOf("hide") >= 0){
+				Menu.show();
+			}else{
+				Menu.hide();
+			}
+			//viewer-menu
 		}, false);
 	};
 	
